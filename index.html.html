@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>M.A.F | Shift Management</title>
+<style>
+:root{--bg:#0b100d;--panel:#121b15;--panel2:#18251c;--line:#2a3b2e;--green:#87d64b;--green2:#b0ef79;--text:#edf5e9;--muted:#9cac9d;--red:#e56b61;--amber:#e2bd67}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -20%,#263c27 0,#0b100d 55%);color:var(--text);font-family:Tahoma,"Segoe UI",sans-serif;min-height:100vh}
+.wrap{max-width:1080px;margin:auto;padding:28px 18px 48px}.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:14px}.mark{width:54px;height:54px;border:1px solid #557b3b;background:linear-gradient(145deg,#243c20,#101910);border-radius:14px;display:grid;place-items:center;color:var(--green);font-size:25px;font-weight:900;box-shadow:0 0 28px #87d64b18}
+h1{font-size:25px;letter-spacing:2px;margin:0}.sub{font-size:11px;color:var(--muted);letter-spacing:2px;margin-top:5px;direction:ltr;text-align:right}
+.status{border:1px solid var(--line);border-radius:999px;padding:9px 13px;color:var(--green2);font-size:12px;background:#111a13}
+.hero{background:linear-gradient(120deg,#1a2a1c,#111a14);border:1px solid var(--line);border-radius:20px;padding:24px;display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:18px;overflow:hidden;position:relative}
+.hero:after{content:"M.A.F";position:absolute;left:22px;bottom:-24px;font-size:100px;font-weight:900;color:#ffffff06;direction:ltr}
+.hero h2{margin:0 0 8px;font-size:21px}.hero p{margin:0;color:var(--muted);font-size:13px;line-height:1.8}
+.timer-badge{position:relative;z-index:1;text-align:center;background:#0b130d;border:1px solid #456437;border-radius:16px;padding:13px 20px;min-width:125px}.timer-badge strong{display:block;color:var(--green);font-size:28px;direction:ltr}.timer-badge span{font-size:11px;color:var(--muted)}
+.grid{display:grid;grid-template-columns: minmax(0, .95fr) minmax(0,1.35fr);gap:18px}.panel{background:linear-gradient(180deg,#142017,#101711);border:1px solid var(--line);border-radius:18px;padding:20px;min-width:0}
+.panel h3{margin:0 0 17px;font-size:16px;display:flex;align-items:center;gap:9px}.dot{width:8px;height:8px;background:var(--green);border-radius:50%;box-shadow:0 0 10px #87d64b80}
+label{display:block;color:var(--muted);font-size:12px;margin:0 0 8px}input,select{width:100%;background:#0b120d;border:1px solid #304333;color:var(--text);border-radius:10px;padding:13px 12px;font:inherit;font-size:14px;outline:none}input:focus,select:focus{border-color:var(--green);box-shadow:0 0 0 3px #87d64b18}
+.field{margin-bottom:15px}.choices{display:grid;grid-template-columns:1fr 1fr;gap:9px}.choice{border:1px solid #304333;background:#0d150f;border-radius:11px;padding:12px;text-align:center;cursor:pointer;color:#c8d6c7;font-size:13px;transition:.15s}.choice:hover{border-color:#638c49}.choice.active{border-color:var(--green);background:#1b2d1b;color:var(--green2);box-shadow:inset 0 0 0 1px #87d64b35}
+button{font:inherit;cursor:pointer;border:0;border-radius:10px;padding:12px 15px;transition:.15s}.primary{width:100%;background:var(--green);color:#14200f;font-weight:800;margin-top:3px}.primary:hover{background:var(--green2);transform:translateY(-1px)}button:disabled{opacity:.45;cursor:not-allowed;transform:none}
+.hint{font-size:11px;color:var(--muted);line-height:1.8;margin:12px 0 0}.list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:15px}.count{background:#20321f;color:var(--green2);border-radius:999px;padding:5px 10px;font-size:11px}
+.empty{border:1px dashed #354638;border-radius:13px;padding:30px 15px;text-align:center;color:var(--muted);font-size:13px;line-height:2}
+.shift-card{border:1px solid #2c3e30;background:#0d150f;border-radius:13px;padding:14px;margin-bottom:11px}.shift-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:11px}.player{font-weight:700;font-size:15px;direction:ltr;text-align:left}.tag{font-size:11px;color:var(--green2);background:#1b2d1b;padding:5px 9px;border-radius:7px}
+.times{display:flex;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin-bottom:12px;direction:ltr;justify-content:flex-end}.remaining{font-size:12px;color:var(--amber);direction:ltr;text-align:right;margin-bottom:12px}.bar{height:5px;background:#263329;border-radius:9px;overflow:hidden;margin-bottom:13px}.bar i{display:block;height:100%;background:var(--green);width:0%;transition:width .5s}
+.actions{display:flex;gap:8px;flex-wrap:wrap}.small{padding:8px 11px;font-size:11px;background:#1b2a1e;color:var(--text);border:1px solid #344b37}.small:hover{border-color:var(--green)}.danger{color:#ffaaa3;background:#2a1716;border-color:#58302d}.expired{color:#ff9b91}
+.output{margin-top:18px}.output textarea{min-height:76px;resize:vertical;direction:ltr;text-align:left;font-family:Consolas,monospace;font-size:12px;line-height:1.7}.copyrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.copy{background:#263d25;color:var(--green2);border:1px solid #456437;padding:8px 13px;font-size:12px}
+.member-add{display:flex;gap:9px;margin-bottom:14px}.member-add input{min-width:0;flex:1}.member-add button{white-space:nowrap}.member-row{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid #2c3e30;background:#0d150f;border-radius:11px;padding:10px 12px;margin-bottom:8px}.member-name{direction:ltr;text-align:left;overflow-wrap:anywhere;font-size:13px;font-weight:700}.member-actions{display:flex;gap:7px;flex-shrink:0}
+[hidden]{display:none!important}
+.footer{text-align:center;color:#627365;font-size:11px;margin-top:24px;direction:ltr;letter-spacing:1px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;background:#203321;border:1px solid #547a40;color:#e8f5df;padding:11px 16px;border-radius:10px;font-size:12px;transition:.25s;pointer-events:none;z-index:10}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.hero{align-items:flex-start}.top{align-items:flex-start}.status{font-size:10px}.wrap{padding:18px 12px 35px}}
+@media(max-width:420px){.hero{padding:18px}.hero h2{font-size:18px}.timer-badge{min-width:95px;padding:10px}.timer-badge strong{font-size:23px}.choices{gap:7px}.choice{padding:11px 6px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><div class="mark">M</div><div><h1>M.A.F</h1><div class="sub">MAAREF AZADI · SHIFT SYSTEM</div></div></div>
+    <div class="status">● سیستم مدیریت شیفت</div>
+  </header>
+
+  <section class="hero">
+    <div><h2>مدیریت شیفت‌های فکشن</h2><p>ثبت و پیگیری شیفت اعضای Maaref Azadi<br>هر شیفت به مدت ۱۵ دقیقه فعال خواهد بود.</p></div>
+    <div class="timer-badge"><strong>15:00</strong><span>مدت هر شیفت</span></div>
+  </section>
+
+  <main class="grid">
+    <section class="panel">
+      <h3><i class="dot"></i> شروع شیفت جدید</h3>
+      <div class="field"><label for="player">نام بازیکن (Player)</label><input id="player" maxlength="32" placeholder="مثلاً LuNeX" autocomplete="off" dir="ltr"></div>
+      <div class="field"><label>نوع شیفت را انتخاب کنید</label>
+        <div class="choices" id="choices">
+          <div class="choice active" data-type="Shift">Shift</div>
+          <div class="choice" data-type="Guard">Guard</div>
+          <div class="choice" data-type="CourtHouse">CourtHouse</div>
+          <div class="choice" data-type="Annihilator">Annihilator</div>
+          <div class="choice" data-type="CCTV">CCTV</div>
+          <div class="choice" data-type="Mahzar">Mahzar</div>
+        </div>
+      </div>
+      <div class="field" id="guardLocField" hidden>
+        <label for="guardLoc">مکان (Loc)</label>
+        <select id="guardLoc">
+          <option value="Taxi">Taxi</option>
+          <option value="Medic">Medic</option>
+          <option value="FireFighter">FireFighter</option>
+          <option value="SedaVaSima">SedaVaSima</option>
+          <option value="Mechanic">Mechanic</option>
+        </select>
+      </div>
+      <button class="primary" id="startBtn">＋ شروع شیفت</button>
+      <p class="hint">پس از شروع، متن آماده شیفت ساخته می‌شود. زمان شروع و پایان به‌صورت خودکار ثبت خواهد شد.</p>
+    </section>
+
+    <section class="panel">
+      <div class="list-head"><h3 style="margin:0"><i class="dot"></i> شیفت‌های فعال</h3><span class="count" id="count">۰ فعال</span></div>
+      <div id="activeList"><div class="empty">هنوز شیفتی ثبت نشده است.<br>برای شروع، نام بازیکن و نوع شیفت را وارد کنید.</div></div>
+    </section>
+  </main>
+
+  <section class="panel output">
+    <div class="list-head"><h3 style="margin:0"><i class="dot"></i> اعضای ثبت‌شده</h3><span class="count" id="memberCount">۰ عضو</span></div>
+    <div class="member-add">
+      <input id="newMember" maxlength="32" placeholder="نام عضو جدید" dir="ltr" autocomplete="off">
+      <button class="copy" id="addMemberBtn">＋ افزودن عضو</button>
+    </div>
+    <div id="memberList"><div class="empty">هنوز عضوی ثبت نشده است.</div></div>
+  </section>
+  <div class="footer">M.A.F · MAAREF AZADI · SHIFT MANAGEMENT SYSTEM · CREATED BY LuNeX</div>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const STORE = 'maf_shift_manager_v1';
+const MEMBERS_STORE = 'maf_shift_members_v1';
+const DURATIONS = {Shift:15, Guard:15, CourtHouse:15, Annihilator:15, CCTV:15, Mahzar:20};
+let selected = 'Shift';
+let shifts = [];
+let members = [];
+let latestText = '';
+const $ = id => document.getElementById(id);
+const fa = n => new Intl.NumberFormat('fa-IR').format(n);
+
+function load(){
+  try { shifts = JSON.parse(localStorage.getItem(STORE) || '[]'); } catch(e) { shifts = []; }
+  try { members = JSON.parse(localStorage.getItem(MEMBERS_STORE) || '[]'); } catch(e) { members = []; }
+  if (!Array.isArray(shifts)) shifts = [];
+  if (!Array.isArray(members)) members = [];
+  // Migrate every player name already present in the saved shift records.
+  shifts.forEach(s => { if (s.player) addMemberToMemory(s.player); });
+  saveMembers();
+}
+function save(){ localStorage.setItem(STORE, JSON.stringify(shifts)); }
+function saveMembers(){ localStorage.setItem(MEMBERS_STORE, JSON.stringify(members)); }
+function addMemberToMemory(name){
+  name = String(name || '').trim();
+  if (name && !members.some(m => m.toLowerCase() === name.toLowerCase())) members.push(name);
+}
+function clock(ms){
+  return new Date(ms).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',hour12:false});
+}
+function makeText(s){
+  const loc = s.type === 'Guard' ? ` || Loc: ${s.loc || 'Taxi'}` : '';
+  const prefix = 'f ';
+  return `${prefix}Start (${s.type}) || ${s.player}${loc} || ST: ${clock(s.start)} || ET: ${clock(s.end)} || GL`;
+}
+function toast(msg){
+  const t=$('toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(toast.t); toast.t=setTimeout(()=>t.classList.remove('show'),1900);
+}
+function escapeHtml(v){
+  return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function renderMembers(){
+  $('memberCount').textContent = fa(members.length) + ' عضو';
+  $('memberList').innerHTML = members.length ? members.map((name,i)=>`
+    <div class="member-row">
+      <span class="member-name">${escapeHtml(name)}</span>
+      <div class="member-actions">
+        <button class="small" data-copy-member="${i}">کپی</button>
+        <button class="small" data-edit-member="${i}">ویرایش</button>
+        <button class="small danger" data-delete-member="${i}">حذف</button>
+      </div>
+    </div>`).join('') : '<div class="empty">هنوز عضوی ثبت نشده است.</div>';
+  $('playerSuggestions').innerHTML = members.map(name=>`<option value="${escapeHtml(name)}"></option>`).join('');
+}
+function render(){
+  const now=Date.now(), active=shifts.filter(s=>s.end>now);
+  $('count').textContent=fa(active.length)+' فعال';
+  if(!active.length){
+    $('activeList').innerHTML='<div class="empty">در حال حاضر شیفت فعالی وجود ندارد.</div>';
+    return;
+  }
+  $('activeList').innerHTML=active.sort((a,b)=>a.end-b.end).map(s=>{
+    const total = (s.duration || DURATIONS[s.type] || 15) * 60000;
+    const left=Math.max(0,s.end-now), pct=Math.max(0,Math.min(100,(left/total)*100));
+    const mins=Math.floor(left/60000),secs=Math.floor((left%60000)/1000);
+    return `<article class="shift-card">
+      <div class="shift-top"><div class="player">${escapeHtml(s.player)}</div><span class="tag">${escapeHtml(s.type)}${s.type==='Guard' && s.loc ? ' · '+escapeHtml(s.loc) : ''}</span></div>
+      <div class="times"><span>ST: ${clock(s.start)}</span><span>ET: ${clock(s.end)}</span></div>
+      <div class="remaining">باقی‌مانده: ${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}</div>
+      <div class="bar"><i style="width:${pct}%"></i></div>
+      <div class="actions"><button class="small" data-copy="${s.id}">کپی متن شیفت</button><button class="small danger" data-end="${s.id}">پایان شیفت</button></div>
+    </article>`;
+  }).join('');
+}
+$('choices').addEventListener('click',e=>{
+  const c=e.target.closest('.choice'); if(!c)return;
+  selected=c.dataset.type;
+  document.querySelectorAll('.choice').forEach(x=>x.classList.toggle('active',x===c));
+  $('guardLocField').hidden = selected !== 'Guard';
+  $('startBtn').textContent = `＋ شروع شیفت ${DURATIONS[selected]} دقیقه‌ای`;
+});
+$('startBtn').addEventListener('click',()=>{
+  const player=$('player').value.trim();
+  if(!player){toast('ابتدا نام بازیکن را وارد کنید');$('player').focus();return;}
+  const start=Date.now(), duration=DURATIONS[selected] || 15;
+  const s={id:String(start)+'_'+Math.random().toString(36).slice(2,7),player,type:selected,duration,start,end:start+duration*60000};
+  if(selected==='Guard') s.loc=$('guardLoc').value;
+  shifts.push(s); addMemberToMemory(player); saveMembers(); save();
+  latestText=makeText(s); renderMembers(); render(); $('player').value='';
+  toast('شیفت با موفقیت شروع شد');
+});
+$('activeList').addEventListener('click',e=>{
+  const copy=e.target.closest('[data-copy]'), end=e.target.closest('[data-end]');
+  if(copy){const s=shifts.find(x=>x.id===copy.dataset.copy);if(s){latestText=makeText(s);copyText(latestText);}}
+  if(end){shifts=shifts.filter(x=>x.id!==end.dataset.end);save();render();toast('شیفت پایان یافت');}
+});
+$('addMemberBtn').addEventListener('click',()=>{
+  const name=$('newMember').value.trim();
+  if(!name){toast('نام عضو را وارد کنید');$('newMember').focus();return;}
+  if(members.some(m=>m.toLowerCase()===name.toLowerCase())){toast('این عضو از قبل ثبت شده است');return;}
+  members.push(name);saveMembers();$('newMember').value='';renderMembers();toast('عضو اضافه شد');
+});
+$('newMember').addEventListener('keydown',e=>{if(e.key==='Enter')$('addMemberBtn').click();});
+$('memberList').addEventListener('click',e=>{
+  const copy=e.target.closest('[data-copy-member]');
+  const edit=e.target.closest('[data-edit-member]');
+  const del=e.target.closest('[data-delete-member]');
+  if(copy){
+    const name=members[Number(copy.dataset.copyMember)];
+    if(name) copyText(name);
+  }
+  if(edit){
+    const i=Number(edit.dataset.editMember), old=members[i];
+    const updated=prompt('نام جدید عضو را وارد کنید:',old);
+    if(updated===null)return;
+    const name=updated.trim();
+    if(!name){toast('نام نمی‌تواند خالی باشد');return;}
+    if(members.some((m,j)=>j!==i && m.toLowerCase()===name.toLowerCase())){toast('این نام از قبل ثبت شده است');return;}
+    members[i]=name;
+    shifts.forEach(s=>{if(s.player===old)s.player=name;});
+    saveMembers();save();renderMembers();render();toast('نام عضو ویرایش شد');
+  }
+  if(del){
+    const i=Number(del.dataset.deleteMember), name=members[i];
+    if(!confirm(`نام «${name}» از فهرست اعضا پاک شود؟`))return;
+    members.splice(i,1);saveMembers();renderMembers();toast('عضو حذف شد');
+  }
+});
+async function copyText(txt){
+  try{await navigator.clipboard.writeText(txt);toast('متن کپی شد');}
+  catch(e){const temp=document.createElement('textarea');temp.value=txt;document.body.appendChild(temp);temp.select();document.execCommand('copy');temp.remove();toast('متن کپی شد');}
+}
+load();
+$('player').insertAdjacentHTML('afterend','<datalist id="playerSuggestions"></datalist>');
+$('player').setAttribute('list','playerSuggestions');
+renderMembers();render();
+setInterval(()=>{
+  const before=shifts.length;
+  shifts=shifts.filter(s=>s.end>Date.now());
+  if(shifts.length!==before)save();
+  render();
+},1000);
+</script>
+</body>
+</html>
